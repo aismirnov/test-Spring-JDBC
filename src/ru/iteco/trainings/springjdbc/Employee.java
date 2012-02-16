@@ -19,6 +19,9 @@ public class Employee {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
+	public String toString() {
+		return getNumber() + " " + getName() + " " + getJobTitle();
+	}
 	
 	private int number;
 	private String name;

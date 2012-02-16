@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/glassfish3/javadb/lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.aop_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.asm_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.beans_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.context.support_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.context_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.core_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.expression_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.core.metadata_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.core_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.ui.editor_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.ui.graph_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.ui.refactoring_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.ui.search_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.beans.ui_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.core_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.doc_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.uaa_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse.ui_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.ide.eclipse_2.6.0.201103160035-RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.jdbc_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.jms_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.orm_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.osgi.core_2.0.0.M2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.osgi.io_2.0.0.M2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.oxm_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.transaction_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.web_3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
