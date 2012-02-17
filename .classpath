@@ -31,5 +31,9 @@
 	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.transaction_3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/org.springframework.web_3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-dbcp-1.4/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-dbcp-1.4/commons-dbcp-1.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-pool-1.6/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexey/AppData/Local/Genuitec/Common/plugins/commons-pool-1.6/commons-pool-1.6-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
