@@ -21,11 +21,18 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-    <bean id="employeeDao" class="ru.iteco.trainings.springjdbc.EmployeeDao">
-    	<property name="transactionManager" ref="transactionManager" />
-    </bean>
-
+	<bean id="employeeDao" class="ru.iteco.trainings.springjdbc.EmployeeDao">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="sqlQueryForRetrieveEmpByNumber">
+			<value>
+			<![CDATA[
+select EMPNO, ENAME, JOB_TITLE from Employee where EMPNO = ?
+					]]>
+			</value>
+		</property>
+	</bean>
 
 	<context:property-placeholder location="src\\jdbc.properties" />
+
 
 </beans>
