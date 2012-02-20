@@ -22,42 +22,43 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 //@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=false)
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 @Transactional
 
-public class EmployeeDaoTest {
-	private static EmployeeDao empDao;
+public class EmployeeDaoBeanTest {
+	private static final int SAMPLE_EMPLOYEE_NUMBER = 111;
+	private static EmployeeDaoBean empDao;
 	private static Employee emp1, emp2, emp3;
 	private static Employee newEmp;
 	
 	@BeforeClass
 	public static void init() {
-		ApplicationContext context = new FileSystemXmlApplicationContext("src\\context.xml");
-		empDao = (EmployeeDao)context.getBean("employeeDao");
+		ApplicationContext context = new FileSystemXmlApplicationContext("classpath:context.xml");
+		empDao = (EmployeeDaoBean)context.getBean("employeeDaoBean");
 		
 		emp1 = new Employee(7369, "John Smith", "Clerk");
 		emp2 = new Employee(7499, "Joe Allen", "Salesman");
 		emp3 = new Employee(7521, "Mary Lou", "Director");
-		newEmp = new Employee(111, "222", "333");
 	}
 	
 	@Test
 	public void testRetrieve() {
-		assertEquals(emp1, empDao.retrieve(7369));
-		assertEquals(emp2, empDao.retrieve(7499));
+		Employee newEmployee = getSampleEmployee(SAMPLE_EMPLOYEE_NUMBER);
+		createEmployee(newEmployee);
+		assertEquals(newEmployee, empDao.retrieve(newEmployee.getNumber()));
+		deleteEmployee(newEmployee);
 	}
 	
 	@Test
-	@Rollback(true)
 	public void testCreate() {
-		empDao.create(newEmp);
+		Employee newEmp = getSampleEmployee(SAMPLE_EMPLOYEE_NUMBER);
+		createEmployee(newEmp);
 		assertEquals(newEmp, empDao.retrieve(newEmp.getNumber()));
+		deleteEmployee(newEmp);
 	}
 	
-	@Test
-	public void testDelete() {
-		empDao.delete(newEmp);
-		assertTrue(true);
+	private Employee getSampleEmployee(Integer id) {
+		return new Employee(id, "222", "333");
 	}
 	
 	@Test
@@ -65,16 +66,32 @@ public class EmployeeDaoTest {
 		List<Employee> empList = Arrays.asList(emp1, emp2, emp3);
 		assertEquals(empList, empDao.getEmployeeList());
 	}
-
+	
+	@Test
+	public void testDelete() {
+		Employee newEmp = getSampleEmployee(SAMPLE_EMPLOYEE_NUMBER);
+		createEmployee(newEmp);
+		assertEquals(newEmp, empDao.retrieve(newEmp.getNumber()));
+		deleteEmployee(newEmp);
+	}
+	
 	@Test
 	public void testUpdate() {
-		emp1.setName("New Name");
-		empDao.update(emp1);
-		assertEquals(emp1, empDao.retrieve(emp1.getNumber()));
-		
-		emp1.setName("John Smith");
-		empDao.update(emp1);
-		assertEquals(emp1, empDao.retrieve(emp1.getNumber()));
+		Employee newEmp = getSampleEmployee(SAMPLE_EMPLOYEE_NUMBER);
+		createEmployee(newEmp);
+		newEmp.setName("New Name");
+		empDao.update(newEmp);
+		assertEquals(newEmp, empDao.retrieve(newEmp.getNumber()));
+		deleteEmployee(newEmp);
+	}
+	
+	
+	private void createEmployee(Employee newEmp) {
+		empDao.create(newEmp);
+	}
+	
+	private void deleteEmployee(Employee newEmp) {
+		empDao.delete(newEmp);
 	}
 
 }

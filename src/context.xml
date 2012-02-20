@@ -19,8 +19,8 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="employeeDao" class="ru.iteco.trainings.springjdbc.EmployeeDao">
-		<property name="transactionManager" ref="transactionManager" />
+	<bean id="employeeDaoBean" class="ru.iteco.trainings.springjdbc.EmployeeDaoBean">
+		<property name="dataSource" ref="dataSource" />
 
 		<property name="sqlQueryToCreateEmp">
 			<value>
