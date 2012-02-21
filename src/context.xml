@@ -61,17 +61,9 @@ select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee
 					]]>
 			</value>
 		</property>
-		
-		<property name="sqlQueryToFindEmp">
-			<value>
-			<![CDATA[
-select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where ENAME = ?
-					]]>
-			</value>
-		</property>
 	</bean>
 
-	<context:property-placeholder location="src\\jdbc.properties" />
+	<context:property-placeholder location="classpath:jdbc.properties" />
 
 
 </beans>

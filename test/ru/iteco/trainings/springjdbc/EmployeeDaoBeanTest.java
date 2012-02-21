@@ -1,53 +1,42 @@
 package ru.iteco.trainings.springjdbc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.BeforeClass;
+import javax.annotation.Resource;
+
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 @Transactional
-
 public class EmployeeDaoBeanTest {
-	private static Employee emp1, emp2, emp3;
-	private static EmployeeDaoBean empDao;
-	
-	@BeforeClass
-	public static void init() {
-		ApplicationContext context = new FileSystemXmlApplicationContext("classpath:context.xml");
-		empDao = (EmployeeDaoBean)context.getBean("employeeDaoBean");
-		/*
-		emp1 = new Employee("John Smith", "Clerk", new Date("21.02.2012"));
-		emp2 = new Employee("Joe Allen", "Salesman", new Date("21.02.2012"));
-		emp3 = new Employee("Mary Lou", "Director", new Date("21.02.2012")); */
-	}
+	@Resource(name="employeeDaoBean")
+	private EmployeeDaoBean empDao;
 	
 	@Test
 	public void testRetrieve() {
-		Employee newEmployee = getSampleEmployee();
-		int newEmpNumber = createEmployee(newEmployee);
-		assertEquals(newEmployee, empDao.retrieve(newEmpNumber));
+		Employee newEmp = getSampleEmployee();
+		int newEmpNumber = createEmployee(newEmp);
+		assertTrue(equal(newEmp, empDao.retrieve(newEmpNumber)));
 	}
 	
 	@Test
 	public void testCreate() {
-		Employee newEmployee = getSampleEmployee();
-		int newEmpNumber = createEmployee(newEmployee);
-		assertEquals(newEmployee, empDao.retrieve(newEmpNumber));
+		Employee newEmp = getSampleEmployee();
+		int newEmpNumber = createEmployee(newEmp);
+		assertTrue(equal(newEmp, empDao.retrieve(newEmpNumber)));
 	}
 	
 	@Test
@@ -68,27 +57,53 @@ public class EmployeeDaoBeanTest {
 		newEmp.setNumber(newEmpNumber);
 		
 		empDao.update(newEmp);
-		assertEquals(newEmp, empDao.retrieve(newEmpNumber));
+		assertTrue(equal(newEmp, empDao.retrieve(newEmpNumber)));
 	}
 	
-	@Ignore
 	@Test
+	@Ignore
 	public void testFindEmployees() {
-		final String sampleEmployeeName = "testName";
-		Employee newEmp = getSampleEmployee();
-		newEmp.setName(sampleEmployeeName);
-		createEmployee(newEmp);
-		List<Employee> empList = Arrays.asList(newEmp);
-		assertEquals(empList, empDao.findEmployees(sampleEmployeeName));
-		deleteEmployee(newEmp);
+		//this test is not implemented yet
+		Employee emp1 = getSampleEmployee("2010-01-01");
+		Employee emp2 = getSampleEmployee("2012-01-01");
+		List<Employee> empListExpected =
+			Arrays.asList(emp1, emp2);
+		List<Employee> empList = empDao.findEmployees(new EmployeeMatcherCreator() {
+			public EmployeeMatcher createEmployeeMatcher() {
+				EmployeeMatcher empMatcher = new EmployeeMatcher();
+				empMatcher.setEndDate(Date.valueOf("2010-02-01"));
+				empMatcher.setStartDate(Date.valueOf("2010-01-01"));
+				return empMatcher;
+			}
+		});
 	}
 	
 	private Employee getSampleEmployee() {
 		return new Employee("testName", "testJob", Date.valueOf("2012-02-21"));
 	}
 	
+	private Employee getSampleEmployee(String date) {
+		return new Employee("testName", "testJob", Date.valueOf(date));
+	}
+	
+	private boolean equal(Employee emp1, Employee emp2) {
+		if(emp1.getName() == null || 
+				emp1.getJobTitle() == null ||
+				emp1.getAdmissionDate() == null) {
+			return false;
+		}
+		if(emp1.getName().equals(emp2.getName()) &&
+				emp1.getJobTitle().equals(emp2.getJobTitle()) &&
+				emp1.getAdmissionDate().equals(emp2.getAdmissionDate())) {
+			return true;
+		}
+		return false;
+	}
+	
 	private int createEmployee(Employee newEmp) {
-		return empDao.create(newEmp);
+		int newEmpId = empDao.create(newEmp);
+		newEmp.setNumber(newEmpId);
+		return newEmpId;
 	}
 	
 	private void deleteEmployee(Employee newEmp) {

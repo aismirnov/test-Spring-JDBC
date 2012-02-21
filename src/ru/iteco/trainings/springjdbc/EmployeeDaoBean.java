@@ -9,8 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,7 +24,6 @@ public class EmployeeDaoBean implements EmployeeDao {
 	private String sqlQueryToRetrieveEmp;
 	private String sqlQueryToUpdateEmp;
 	private String sqlQueryToDeleteEmp;
-	private String sqlQueryToFindEmp;
 	private String sqlQueryToGetEmpList;
 
 	public void setDataSource(DataSource dataSource) {
@@ -78,14 +75,36 @@ public class EmployeeDaoBean implements EmployeeDao {
 	
 	
 	public List<Employee> getEmployeeList() {
-		List<Employee> employees = this.jdbcTemplate.query(
-				sqlQueryToGetEmpList, employeeRowMapper.INSTANCE);
-		return employees;
+		return findEmployees(new EmployeeMatcherCreator() {
+			public EmployeeMatcher createEmployeeMatcher() {
+				EmployeeMatcher empMatcher = new EmployeeMatcher();
+				return empMatcher;
+			}
+		});
 	}
 	
-	public List<Employee> findEmployees(String name) {
+	public List<Employee>findEmployees(EmployeeMatcherCreator empMatcherCreator) {
+		EmployeeMatcher empMatcher = empMatcherCreator.createEmployeeMatcher();
+		String query = sqlQueryToGetEmpList + " where 1=1";
+		
+		if(empMatcher.getNameToFind() != null) {
+			query += " and ENAME like '" + empMatcher.getNameToFind() + "'";
+		}
+		
+		if(empMatcher.getJobTitleToFind() != null) {
+			query += " and JOB_TITLE like '" + empMatcher.getJobTitleToFind() + "'";
+		}
+		
+		if(empMatcher.getStartDate() != null) {
+			query += " and ADMISSION_DATE >= '" + empMatcher.getStartDate() + "'";
+		}
+		
+		if(empMatcher.getEndDate() != null) {
+			query += " and ADMISSION_DATE <= '" + empMatcher.getEndDate() + "'";
+		}
+		
 		List<Employee> employees = this.jdbcTemplate.query(
-				sqlQueryToFindEmp, employeeRowMapper.INSTANCE, name);
+				query, employeeRowMapper.INSTANCE);
 		return employees;
 	}
 
@@ -104,10 +123,6 @@ public class EmployeeDaoBean implements EmployeeDao {
 
 	public void setSqlQueryToDeleteEmp(String sqlQueryToDeleteEmp) {
 		this.sqlQueryToDeleteEmp = sqlQueryToDeleteEmp;
-	}
-
-	public void setSqlQueryToFindEmp(String sqlQueryToFindEmp) {
-		this.sqlQueryToFindEmp = sqlQueryToFindEmp;
 	}
 	
 	public void setSqlQueryToGetEmpList(String sqlQueryToGetEmpList) {
