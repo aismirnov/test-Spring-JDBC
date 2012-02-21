@@ -25,7 +25,7 @@
 		<property name="sqlQueryToCreateEmp">
 			<value>
 			<![CDATA[
-insert into Employee (EMPNO, ENAME, JOB_TITLE) values (?, ?, ?)
+insert into Employee (ENAME, JOB_TITLE, ADMISSION_DATE) values (?, ?, ?)
 					]]>
 			</value>
 		</property>
@@ -33,7 +33,7 @@ insert into Employee (EMPNO, ENAME, JOB_TITLE) values (?, ?, ?)
 		<property name="sqlQueryToRetrieveEmp">
 			<value>
 			<![CDATA[
-select EMPNO, ENAME, JOB_TITLE from Employee where EMPNO = ?
+select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where EMPNO = ?
 					]]>
 			</value>
 		</property>
@@ -41,7 +41,7 @@ select EMPNO, ENAME, JOB_TITLE from Employee where EMPNO = ?
 		<property name="sqlQueryToUpdateEmp">
 			<value>
 			<![CDATA[
-update Employee set EMPNO = ?, ENAME = ?, JOB_TITLE = ? where EMPNO = ?
+update Employee set ENAME = ?, JOB_TITLE = ?, ADMISSION_DATE = ? where EMPNO = ?
 					]]>
 			</value>
 		</property>
@@ -50,6 +50,22 @@ update Employee set EMPNO = ?, ENAME = ?, JOB_TITLE = ? where EMPNO = ?
 			<value>
 			<![CDATA[
 delete from Employee where EMPNO = ?
+					]]>
+			</value>
+		</property>
+		
+		<property name="sqlQueryToGetEmpList">
+			<value>
+			<![CDATA[
+select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee
+					]]>
+			</value>
+		</property>
+		
+		<property name="sqlQueryToFindEmp">
+			<value>
+			<![CDATA[
+select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where ENAME = ?
 					]]>
 			</value>
 		</property>

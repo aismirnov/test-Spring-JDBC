@@ -1,5 +1,7 @@
 package ru.iteco.trainings.springjdbc;
 
+import java.sql.Date;
+
 public class Employee {
 	public int getNumber() {
 		return number;
@@ -19,6 +21,12 @@ public class Employee {
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
+	public Date getAdmissionDate() {
+		return admissionDate;
+	}
+	public void setAdmissionDate(Date admissionDate) {
+		this.admissionDate = admissionDate;
+	}
 	public String toString() {
 		return getNumber() + " " + getName() + " " + getJobTitle();
 	}
@@ -26,25 +34,26 @@ public class Employee {
 	private int number;
 	private String name;
 	private String jobTitle;
+	private Date admissionDate;
 	
-	public Employee(int number, String name, String jobTitle) {
-		this.number = number;
+	public Employee(String name, String jobTitle, Date admissionDate) {
 		this.name = name;
 		this.jobTitle = jobTitle;
+		this.admissionDate = admissionDate;
 	}
 	
 	public Employee() {
 		
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
+				+ ((admissionDate == null) ? 0 : admissionDate.hashCode());
+		result = prime * result
 				+ ((jobTitle == null) ? 0 : jobTitle.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + number;
 		return result;
 	}
 	@Override
@@ -59,6 +68,13 @@ public class Employee {
 			return false;
 		}
 		Employee other = (Employee) obj;
+		if (admissionDate == null) {
+			if (other.admissionDate != null) {
+				return false;
+			}
+		} else if (!admissionDate.equals(other.admissionDate)) {
+			return false;
+		}
 		if (jobTitle == null) {
 			if (other.jobTitle != null) {
 				return false;
@@ -73,9 +89,7 @@ public class Employee {
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (number != other.number) {
-			return false;
-		}
 		return true;
 	}
+	
 }
