@@ -30,7 +30,7 @@ public class EmployeeDaoBean implements EmployeeDao {
 	private String sqlQueryToGetEmpList;
 	private String sqlQueryToCountEmp;
 	
-	public int create(Employee emp) {
+	public void create(Employee emp) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		final String empName = emp.getName();
 		final String empJob = emp.getJobTitle();
@@ -47,9 +47,8 @@ public class EmployeeDaoBean implements EmployeeDao {
 		        }
 		    },
 		    keyHolder);
-		int newEmployeeName = keyHolder.getKey().intValue();
-		emp.setNumber(newEmployeeName);
-		return newEmployeeName;
+		int newEmployeeNumber = keyHolder.getKey().intValue();
+		emp.setNumber(newEmployeeNumber);
 	}
 	
 	public Employee retrieve(int empNumber) {

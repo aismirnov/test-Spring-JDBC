@@ -6,27 +6,24 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
+@Table(name = "Employee")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@NotNull
-	@Column(name="EMPNO")
+	@Column(name="EMPNO", nullable=false)
 	private int number;
 	
-	@NotNull
+	@Column(name="ENAME", nullable=false)
 	@Size(max=50)
-	@Column(name="ENAME")
 	private String name;
 	
-	@NotNull
+	@Column(name="JOB_TITLE", nullable=false)
 	@Size(max=150)
-	@Column(name="JOB_TITLE")
 	private String jobTitle;
 	
-	@NotNull
-	@Column(name="ADMISSION_DATE")
+	@Column(name="ADMISSION_DATE", nullable=false)
 	private Date admissionDate;
 
 	public Employee(String name, String jobTitle, Date admissionDate) {

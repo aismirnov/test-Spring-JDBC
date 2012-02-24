@@ -1,45 +1,40 @@
 package ru.iteco.trainings.hibernate;
 
 import org.hibernate.*;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import ru.iteco.trainings.common.Employee;
 import ru.iteco.trainings.common.EmployeeDao;
 
+@Repository("userDao")
+@Transactional
 public class EmployeeDaoBean implements EmployeeDao {
-	private Session session;
+	private HibernateTemplate hibernateTemplate;
+
+	@Autowired
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		hibernateTemplate = new HibernateTemplate(sessionFactory);
+	}
+
+	@Transactional(readOnly = false)
+	public void create(Employee emp) {
+		hibernateTemplate.save(emp);
+	}
 	
-	public EmployeeDaoBean() {
-		AnnotationConfiguration config = new AnnotationConfiguration().configure();
-		config.addAnnotatedClass(Employee.class);
-		
-		SessionFactory sf = config.buildSessionFactory();
-		session = sf.getCurrentSession();
-	}
-
-	public int create(Employee emp) {
-		session.beginTransaction();
-		session.save(emp);
-		session.getTransaction().commit();
-		return emp.getNumber();
-	}
-
 	public Employee retrieve(int empNumber) {
-		session.beginTransaction();
-		Employee emp = (Employee) session.get(Employee.class, empNumber);
-		session.getTransaction().commit();
-		return emp;
+		return hibernateTemplate.get(Employee.class, empNumber);
 	}
 
+	@Transactional(readOnly = false)
 	public void update(Employee emp) {
-		session.beginTransaction();
-		session.update(emp);
-		session.getTransaction().commit();
+		hibernateTemplate.update(emp);
 	}
 
+	@Transactional(readOnly = false)
 	public void delete(Employee emp) {
-		session.beginTransaction();
-		session.delete(emp);
-		session.getTransaction().commit();
+		hibernateTemplate.delete(emp);
 	}
 }
