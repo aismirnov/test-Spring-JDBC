@@ -1,10 +1,11 @@
 package ru.iteco.trainings.springjdbc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,10 +18,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.junit.matchers.JUnitMatchers;
+
+import ru.iteco.trainings.common.Employee;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -64,6 +66,7 @@ public class EmployeeDaoBeanTest {
 		assertThat(empDao.retrieve(newEmpNumber), matches(newEmp));
 	}
 	
+	@Ignore
 	@Test
 	public void testFindEmployees() {
 		Employee emp1 = getSampleEmployee("2010-01-01");
@@ -115,7 +118,9 @@ public class EmployeeDaoBeanTest {
 	
 	
 	private boolean listsAreEqual(List<Employee> empListExpected, List<Employee> empList) {
-		return empList.containsAll(empListExpected);
+		Iterator<Employee> itActual = empList.iterator();
+		Iterator<Employee> itExpected = empListExpected.iterator();
+		return false;
 	}
 	
 	private int createEmployee(Employee newEmp) {

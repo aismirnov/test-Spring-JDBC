@@ -1,4 +1,5 @@
-package ru.iteco.trainings.springjdbc;
+package ru.iteco.trainings.common;
+
 
 public interface EmployeeDao {
 	int create(Employee emp);
