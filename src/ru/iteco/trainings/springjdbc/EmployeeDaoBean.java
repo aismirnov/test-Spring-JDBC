@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,11 +28,7 @@ public class EmployeeDaoBean implements EmployeeDao {
 	private String sqlQueryToUpdateEmp;
 	private String sqlQueryToDeleteEmp;
 	private String sqlQueryToGetEmpList;
-
-	public void setDataSource(DataSource dataSource) {
-	    jdbcTemplate = new JdbcTemplate(dataSource);
-	    namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-	}
+	private String sqlQueryToCountEmp;
 	
 	public int create(Employee emp) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -48,18 +47,20 @@ public class EmployeeDaoBean implements EmployeeDao {
 		        }
 		    },
 		    keyHolder);
-		return keyHolder.getKey().intValue();
+		int newEmployeeName = keyHolder.getKey().intValue();
+		emp.setNumber(newEmployeeName);
+		return newEmployeeName;
 	}
 	
 	public Employee retrieve(int empNumber) {
 		if(this.jdbcTemplate.queryForInt(
-				"select count(*) from Employee where EMPNO = ?", empNumber) == 0) {
+				sqlQueryToCountEmp, empNumber) == 0) {
 			return null;
 		}
 		
 		Employee emp = this.jdbcTemplate.queryForObject(
 				sqlQueryToRetrieveEmp,
-				new Object[]{empNumber}, employeeRowMapper.INSTANCE);
+				new Object[]{empNumber}, new employeeRowMapper());
 		return emp;
 	}
 	
@@ -104,10 +105,26 @@ public class EmployeeDaoBean implements EmployeeDao {
 		}
 		
 		List<Employee> employees = this.jdbcTemplate.query(
-				query, employeeRowMapper.INSTANCE);
+				query, new employeeRowMapper());
 		return employees;
 	}
+	
+	private class employeeRowMapper implements RowMapper<Employee> {
+		public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Employee employee = new Employee();
+			employee.setNumber(rs.getInt("EMPNO"));
+			employee.setName(rs.getString("ENAME"));
+			employee.setJobTitle(rs.getString("JOB_TITLE"));
+			employee.setAdmissionDate(rs.getDate("ADMISSION_DATE"));
+			
+			return employee;
+		}
+	}
 
+	public void setDataSource(DataSource dataSource) {
+	    jdbcTemplate = new JdbcTemplate(dataSource);
+	    namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+	}
 	
 	public void setSqlQueryToCreateEmp(String sqlQueryToCreateEmp) {
 		this.sqlQueryToCreateEmp = sqlQueryToCreateEmp;
@@ -130,16 +147,7 @@ public class EmployeeDaoBean implements EmployeeDao {
 	}
 	
 	
-	private enum employeeRowMapper implements RowMapper<Employee> {
-		INSTANCE;
-		public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Employee employee = new Employee();
-			employee.setNumber(rs.getInt("EMPNO"));
-			employee.setName(rs.getString("ENAME"));
-			employee.setJobTitle(rs.getString("JOB_TITLE"));
-			employee.setAdmissionDate(rs.getDate("ADMISSION_DATE"));
-			
-			return employee;
-		}
+	public void setSqlQueryToCountEmp(String sqlQueryToCountEmp) {
+		this.sqlQueryToCountEmp = sqlQueryToCountEmp;
 	}
 }

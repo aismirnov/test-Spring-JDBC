@@ -37,6 +37,14 @@ select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where EMPNO = ?
 					]]>
 			</value>
 		</property>
+		
+		<property name="sqlQueryToCountEmp">
+			<value>
+			<![CDATA[
+select count(*) from Employee where EMPNO = ?
+					]]>
+			</value>
+		</property>
 
 		<property name="sqlQueryToUpdateEmp">
 			<value>
