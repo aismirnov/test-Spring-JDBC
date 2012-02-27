@@ -1,11 +1,10 @@
 
     create table "APP"."EMPLOYEE"(
-        "ID" INTEGER default 'GENERATED_BY_DEFAULT' not null,
+        "ID" INTEGER not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), 
        "ADMISSION_DATE" DATE not null,
        "JOB_TITLE" VARCHAR(150) not null,
        "NAME" VARCHAR(50) not null,
-       "DEPT_ID" INTEGER,
-        constraint "SQL120227132903050" primary key ("ID")
+       "DEPT_ID" INTEGER
     );
 
     alter table "APP"."EMPLOYEE"  
