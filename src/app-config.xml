@@ -7,6 +7,6 @@
 
 	<context:property-placeholder location="configuration.properties" />
 
-	<context:component-scan base-package="ru.iteco.trainings" />
+	<context:component-scan base-package="ru.iteco.trainings.hibernate" />
 	<import resource="db-config.xml" />
 </beans>

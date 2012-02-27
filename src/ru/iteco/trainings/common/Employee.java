@@ -12,10 +12,10 @@ public class Employee implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="EMPNO", nullable=false)
+	@Column(name="ID", nullable=false)
 	private int number;
 	
-	@Column(name="ENAME", nullable=false)
+	@Column(name="NAME", nullable=false)
 	@Size(max=50)
 	private String name;
 	
@@ -25,6 +25,10 @@ public class Employee implements Serializable {
 	
 	@Column(name="ADMISSION_DATE", nullable=false)
 	private Date admissionDate;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="DEPT_ID")
+	private Department dept;
 
 	public Employee(String name, String jobTitle, Date admissionDate) {
 		this.name = name;
@@ -37,7 +41,8 @@ public class Employee implements Serializable {
 	}
 	
 	public String toString() {
-		return getNumber() + " " + getName() + " " + getJobTitle() + " " + getAdmissionDate();
+		return getNumber() + " " + getName() + " " + getJobTitle()
+				+ " " + getAdmissionDate() + " " + getDept();
 	}
 	
 	public int getNumber() {
@@ -56,6 +61,10 @@ public class Employee implements Serializable {
 		return admissionDate;
 	}
 
+	public Department getDept() {
+		return dept == null ? new Department("") : dept;
+	}
+
 	public void setNumber(int number) {
 		this.number = number;
 	}
@@ -70,5 +79,9 @@ public class Employee implements Serializable {
 
 	public void setAdmissionDate(Date admissionDate) {
 		this.admissionDate = admissionDate;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
 	}
 }

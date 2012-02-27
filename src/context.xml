@@ -10,8 +10,6 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
-		<!-- <property name="username" value="${jdbc.username}" /> <property name="password" 
-			value="${jdbc.password}" /> -->
 	</bean>
 
 	<bean id="transactionManager"
@@ -25,7 +23,7 @@
 		<property name="sqlQueryToCreateEmp">
 			<value>
 			<![CDATA[
-insert into Employee (ENAME, JOB_TITLE, ADMISSION_DATE) values (?, ?, ?)
+insert into Employee (NAME, JOB_TITLE, ADMISSION_DATE) values (?, ?, ?)
 					]]>
 			</value>
 		</property>
@@ -33,7 +31,7 @@ insert into Employee (ENAME, JOB_TITLE, ADMISSION_DATE) values (?, ?, ?)
 		<property name="sqlQueryToRetrieveEmp">
 			<value>
 			<![CDATA[
-select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where EMPNO = ?
+select ID, NAME, JOB_TITLE, ADMISSION_DATE from Employee where ID = ?
 					]]>
 			</value>
 		</property>
@@ -41,7 +39,7 @@ select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee where EMPNO = ?
 		<property name="sqlQueryToCountEmp">
 			<value>
 			<![CDATA[
-select count(*) from Employee where EMPNO = ?
+select count(*) from Employee where ID = ?
 					]]>
 			</value>
 		</property>
@@ -49,7 +47,7 @@ select count(*) from Employee where EMPNO = ?
 		<property name="sqlQueryToUpdateEmp">
 			<value>
 			<![CDATA[
-update Employee set ENAME = ?, JOB_TITLE = ?, ADMISSION_DATE = ? where EMPNO = ?
+update Employee set NAME = ?, JOB_TITLE = ?, ADMISSION_DATE = ? where ID = ?
 					]]>
 			</value>
 		</property>
@@ -57,7 +55,7 @@ update Employee set ENAME = ?, JOB_TITLE = ?, ADMISSION_DATE = ? where EMPNO = ?
 		<property name="sqlQueryToDeleteEmp">
 			<value>
 			<![CDATA[
-delete from Employee where EMPNO = ?
+delete from Employee where ID = ?
 					]]>
 			</value>
 		</property>
@@ -65,7 +63,7 @@ delete from Employee where EMPNO = ?
 		<property name="sqlQueryToGetEmpList">
 			<value>
 			<![CDATA[
-select EMPNO, ENAME, JOB_TITLE, ADMISSION_DATE from Employee
+select ID, NAME, JOB_TITLE, ADMISSION_DATE from Employee
 					]]>
 			</value>
 		</property>

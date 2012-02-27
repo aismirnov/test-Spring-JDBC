@@ -1,7 +1,6 @@
 package ru.iteco.trainings.hibernate;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.sql.Date;
 
@@ -13,86 +12,28 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import ru.iteco.trainings.common.Employee;
-import ru.iteco.trainings.common.EmployeeDao;
+import ru.iteco.trainings.common.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration( { "/app-config.xml" })
-
-public class EmployeeDaoBeanTest {
-	private EmployeeDao empDao;
-	
+@ContextConfiguration({"classpath:app-config.xml"})
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
+@Transactional
+public class EmployeeDaoBeanTest extends EmployeeDaoTest {
 	@Autowired
 	public void setDao(EmployeeDao dao) {
 		this.empDao = dao;
 	}
 	
 	@Test
-	public void testRetrieve() {
+	public void testDeptRelation() {
 		Employee newEmp = getSampleEmployee();
-		createEmployee(newEmp);
-		assertThat(empDao.retrieve(newEmp.getNumber()), matches(newEmp));
-	}
-	
-	@Test
-	public void testCreate() {
-		Employee newEmp = getSampleEmployee();
-		createEmployee(newEmp);
-		assertThat(empDao.retrieve(newEmp.getNumber()), matches(newEmp));
-	}
-	
-	@Test
-	public void testDelete() {
-		Employee newEmp = getSampleEmployee();
-		createEmployee(newEmp);
-		deleteEmployee(newEmp);
-		assertNull(empDao.retrieve(newEmp.getNumber()));
-	}
-	
-	@Test
-	public void testUpdate() {
-		Employee newEmp = getSampleEmployee();
+		newEmp.setDept(new Department("test Department name"));
 		createEmployee(newEmp);
 		
-		newEmp.setName("New Name");
-		
-		empDao.update(newEmp);
-		assertThat(empDao.retrieve(newEmp.getNumber()), matches(newEmp));
+		Employee actualEmp = empDao.retrieve(newEmp.getNumber());
+		assertEquals(actualEmp.getDept(), newEmp.getDept());
 	}
-	
-	private Employee getSampleEmployee() {
-		return new Employee("testName", "testJob", Date.valueOf("2012-02-21"));
-	}
-	
-	public static Matcher<Employee> matches(final Employee expected){
-
-	    return new BaseMatcher<Employee>() {
-
-	        protected Employee theExpected = expected;
-
-	        public boolean matches(Object o) {
-	        	Employee actual = (Employee) o;
-	        	
-	        	boolean namesAreEqual = actual.getName().equals(theExpected.getName());
-	    		boolean jobsAreEqual = actual.getJobTitle().equals(theExpected.getJobTitle());
-	    		boolean datesAreEqual = actual.getAdmissionDate().equals(theExpected.getAdmissionDate());
-	    		
-	    		return namesAreEqual && jobsAreEqual && datesAreEqual;
-	        }
-
-	        public void describeTo(Description description) {
-	            description.appendText(theExpected.toString());
-	        }
-	    };
-	}
-	
-	private void createEmployee(Employee newEmp) {
-		empDao.create(newEmp);
-	}
-	
-	private void deleteEmployee(Employee newEmp) {
-		empDao.delete(newEmp);
-	}
-
 }
